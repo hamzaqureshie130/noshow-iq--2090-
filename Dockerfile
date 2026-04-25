@@ -9,7 +9,13 @@ RUN useradd -m appuser
 COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 COPY --from=builder /usr/local/bin /usr/local/bin
 COPY . .
-RUN python train_model.py
+
+RUN pip install kaggle --no-cache-dir && \
+    mkdir -p noshow_iq/data && \
+    kaggle datasets download -d joniarroba/noshowappointments -p noshow_iq/data --unzip && \
+    python train_model.py && \
+    rm -rf noshow_iq/data
+
 RUN chown -R appuser:appuser /app
 USER appuser
 EXPOSE 7860
