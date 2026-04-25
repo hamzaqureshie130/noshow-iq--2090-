@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pandas
+scikit-learn
+imbalanced-learn
+joblib
+pymongo
+python-dotenv
+pytest
+httpx
+flake8
