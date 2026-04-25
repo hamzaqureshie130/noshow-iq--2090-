@@ -9,6 +9,7 @@ RUN useradd -m appuser
 COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 COPY --from=builder /usr/local/bin /usr/local/bin
 COPY . .
+RUN python train_model.py
 RUN chown -R appuser:appuser /app
 USER appuser
 EXPOSE 7860
