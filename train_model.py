@@ -7,7 +7,7 @@ import os
 
 load_dotenv()
 
-df = load_and_clean("noshow_iq/data/KaggleV2-May-2016.csv")
+df = load_and_clean("KaggleV2-May-2016.csv")
 X, y = get_features_and_target(df)
 metrics = train(X, y)
 print("Training complete!")
