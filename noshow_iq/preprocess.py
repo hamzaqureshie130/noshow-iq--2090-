@@ -7,21 +7,30 @@ def load_and_clean(filepath: str) -> pd.DataFrame:
     # Fix column names
     df.columns = [c.strip().lower().replace("-", "_") for c in df.columns]
 
-    # Rename target column (misspelled in dataset)
-    df = df.rename(columns={
-        "no-show": "no_show",
-        "noshow": "no_show",
-        "no_show": "no_show",
-        "hipertension": "hypertension",
-        "handcap": "handicap",
-        "scheduledday": "scheduled_day",
-        "appointmentday": "appointment_day",
-        "patientid": "patient_id",
-        "appointmentid": "appointment_id",
-        "neighbourhood": "neighbourhood",
-    })
+    # Print columns for debugging
+    print("Columns:", df.columns.tolist())
 
-    # Fix target column — Yes means no show (1), No means showed up (0)
+    # Rename target column — handle all possible spellings
+    rename_map = {}
+    for col in df.columns:
+        if "show" in col.lower():
+            rename_map[col] = "no_show"
+        if col == "hipertension":
+            rename_map[col] = "hypertension"
+        if col == "handcap":
+            rename_map[col] = "handicap"
+        if col == "scheduledday":
+            rename_map[col] = "scheduled_day"
+        if col == "appointmentday":
+            rename_map[col] = "appointment_day"
+        if col == "patientid":
+            rename_map[col] = "patient_id"
+        if col == "appointmentid":
+            rename_map[col] = "appointment_id"
+
+    df = df.rename(columns=rename_map)
+
+    # Fix target column
     df["no_show"] = df["no_show"].map({"Yes": 1, "No": 0})
 
     # Fix bad ages
