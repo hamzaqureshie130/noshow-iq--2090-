@@ -1,6 +1,6 @@
 [build-system]
 requires = ["setuptools>=61.0"]
-build-backend = "setuptools.backends.legacy:build"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "noshow_iq"
@@ -22,3 +22,6 @@ dependencies = [
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["noshow_iq*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
